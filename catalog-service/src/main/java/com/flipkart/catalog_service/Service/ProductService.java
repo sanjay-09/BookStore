@@ -37,7 +37,6 @@ public class ProductService {
                 products.hasNext(),
                 products.hasPrevious()
                 );
-        System.out.println("hello10");
 
         return productList;
 
