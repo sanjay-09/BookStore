@@ -17,11 +17,10 @@ public class OrderEventPublishingJob {
     private final OrderEventService orderEventService;
 
 
-//    @Scheduled(cron="${orders.publish-order-events-job-cron}")
-//    @SchedulerLock(name="publishOrderEvents")
-//    public void publishOrderEvents(){
-//        log.info("publish event is called-{}", Instant.now());
-//        this.orderEventService.publishOrderEvents();
-//
-//    }
+    @Scheduled(cron="${orders.publish-order-events-job-cron}")
+   @SchedulerLock(name="publishOrderEvents")
+  public void publishOrderEvents(){
+       log.info("publish event is called-{}", Instant.now());
+      this.orderEventService.publishOrderEvents();
+   }
 }

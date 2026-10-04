@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:35432/postgres}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    dynamic: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sanju.watson0110@gmail.com
+    password: rtom quqr ecwf xzvb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
+logging:
+  level:
+    org.springframework.amqp: DEBUG
+    org.springframework.amqp.rabbit: DEBUG
+    com.rabbitmq.client: DEBUG
+
+
+
+
+server:
+  port: 8002
+  shutdown: graceful
+
+
+
+notification:
+  order-events-exchange: orders-exchange
+  new-orders-queue: new-orders
+  delivered-orders-queue: delivered-orders
+  cancelled-orders-queue: cancelled-orders
+  errors-orders-queue: error-orders
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
