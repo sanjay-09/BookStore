@@ -1,0 +1,79 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.flipkart'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-amqp-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+	testImplementation 'org.testcontainers:testcontainers-postgresql'
+	testImplementation 'org.testcontainers:testcontainers-rabbitmq'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'io.rest-assured:rest-assured:6.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-flyway'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+   // implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    implementation 'io.github.resilience4j:resilience4j-spring-boot4:2.4.0'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.instancio:instancio-junit:5.5.1'
+    implementation 'org.springframework.boot:spring-boot-http-client'
+    testImplementation 'org.wiremock.integrations:wiremock-spring-boot:3.10.6'
+    testImplementation 'org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-15'
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:7.6.0'
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:7.6.0'
+
+
+
+
+}
+ext {
+    set('springCloudVersion', "2025.1.3")
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.named('test') {
+    systemProperty 'user.timezone', 'Asia/Kolkata'
+}
