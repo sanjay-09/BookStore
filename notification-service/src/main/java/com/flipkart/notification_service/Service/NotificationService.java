@@ -1,6 +1,7 @@
 package com.flipkart.notification_service.Service;
 
 
+import com.flipkart.notification_service.Configuration.ApplicationConfiguration;
 import com.flipkart.notification_service.Dto.OrderCreatedEvent;
 import com.flipkart.notification_service.Repository.OrderEventRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NotificationService {
     private final JavaMailSender javaMailSender;
+    private final ApplicationConfiguration applicationConfiguration;
 
 
 
@@ -40,7 +42,7 @@ public class NotificationService {
 
 
         log.info("message-{}",message);
-        send(event.getCustomer().getEmail(),"Order Created Notification ",message);
+        send(event.getCustomer().getEmail(),"Order Created Notification  ",message);
 
 
     }
@@ -69,6 +71,64 @@ public class NotificationService {
 
         log.info("message-{}",message);
         send(event.getCustomer().getEmail(),"Order Delivered Notification",message);
+
+
+    }
+
+    public void sendOrderCancelledNotification(OrderCreatedEvent event){
+
+        String message = """
+        =========================================
+        Order Cancelled Notification
+        =========================================
+
+        Dear %s,
+
+        Your order with orderNumber: %s has been cancelled.
+
+
+        Thanks,
+        BookStore Team
+        =========================================
+        """
+                .formatted(
+                        event.getCustomer().getName(),
+                        event.getOrderNumber()
+                );
+
+
+        log.info("message-{}",message);
+        send(event.getCustomer().getEmail(),"Order Cancelled Notification",message);
+
+
+    }
+
+    public void sendOrderErrorNotification(OrderCreatedEvent event){
+
+        String message = """
+        =========================================
+        Order Processing Failed Notification
+        =========================================
+
+        Dear %s,
+
+        Unfortunately, we could not process your order with orderNumber: %s.
+        Please try again later or contact support at %s.
+
+
+        Thanks,
+        BookStore Team
+        =========================================
+        """
+                .formatted(
+                        event.getCustomer().getName(),
+                        event.getOrderNumber(),
+                        applicationConfiguration.getSupportEmail()
+                );
+
+
+        log.info("message-{}",message);
+        send(event.getCustomer().getEmail(),"Order Processing Failed Notification",message);
 
 
     }

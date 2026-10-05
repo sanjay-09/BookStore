@@ -1,0 +1,32 @@
+version: '3'
+
+vars:
+  IMAGE_NAME: "sanjay2222/bookstore-apigateway-service"
+  IMAGE_TAG: "latest"
+
+tasks:
+
+  build:
+    desc: Build the application
+    cmds:
+      - gradlew.bat clean build
+
+  test:
+    desc: Run tests
+    cmds:
+      - gradlew.bat test
+
+  run:
+    desc: Start Spring Boot
+    cmds:
+      - gradlew.bat bootRun
+
+  docker-build:
+    desc: Build Docker image
+    cmds:
+      - docker build -t {{.IMAGE_NAME}}:{{.IMAGE_TAG}} .
+
+  docker-push:
+    desc: Push Docker image
+    cmds:
+      - docker push {{.IMAGE_NAME}}:{{.IMAGE_TAG}}

@@ -42,4 +42,28 @@ public class OrderEventHandler {
         OrderEvent orderEvent=OrderEvent.builder().eventId(event.getEventId()).updatedAt(LocalDateTime.now()).build();
         this.orderEventRepository.save(orderEvent);
     }
+
+    @RabbitListener(queues = "${notification.cancelled-orders-queue}")
+    void handleCancelledOrderEvent(OrderCreatedEvent event){
+        System.out.println("order cancelled event"+event.getEventId());
+        if (orderEventRepository.existsByEventId(event.getEventId())){
+            log.warn("Received duplicate cancelled Order event Id:"+event.getEventId());
+            return;
+        }
+        notificationService.sendOrderCancelledNotification(event);
+        OrderEvent orderEvent=OrderEvent.builder().eventId(event.getEventId()).updatedAt(LocalDateTime.now()).build();
+        this.orderEventRepository.save(orderEvent);
+    }
+
+    @RabbitListener(queues = "${notification.errors-orders-queue}")
+    void handleErrorOrderEvent(OrderCreatedEvent event){
+        System.out.println("order error event"+event.getEventId());
+        if (orderEventRepository.existsByEventId(event.getEventId())){
+            log.warn("Received duplicate error Order event Id:"+event.getEventId());
+            return;
+        }
+        notificationService.sendOrderErrorNotification(event);
+        OrderEvent orderEvent=OrderEvent.builder().eventId(event.getEventId()).updatedAt(LocalDateTime.now()).build();
+        this.orderEventRepository.save(orderEvent);
+    }
 }

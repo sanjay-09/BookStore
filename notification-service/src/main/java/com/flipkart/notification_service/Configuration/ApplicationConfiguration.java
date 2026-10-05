@@ -17,4 +17,5 @@ public class ApplicationConfiguration {
     private String cancelledOrdersQueue;
     private String errorsOrdersQueue;
     private String catalogServiceUrl;
+    private String supportEmail;
 }

@@ -51,6 +51,7 @@ notification:
   delivered-orders-queue: delivered-orders
   cancelled-orders-queue: cancelled-orders
   errors-orders-queue: error-orders
+  support-email: ${SUPPORT_EMAIL:support@bookstore.com}
 
 
 
