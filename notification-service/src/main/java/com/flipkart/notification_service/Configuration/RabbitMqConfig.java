@@ -82,7 +82,7 @@ public class RabbitMqConfig {
         factory.setMessageConverter(
                 new JacksonJsonMessageConverter()
         );
-        System.out.println();
+
 
         return factory;
     }
