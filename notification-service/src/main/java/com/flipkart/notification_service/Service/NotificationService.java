@@ -40,7 +40,7 @@ public class NotificationService {
 
 
         log.info("message-{}",message);
-        send(event.getCustomer().getEmail(),"Order Created Notification",message);
+        send(event.getCustomer().getEmail(),"Order Created Notification ",message);
 
 
     }
